@@ -17,3 +17,7 @@ resource "aws_subnet" "dotcom-private-b" {
   cidr_block = "10.0.2.0/24"
   availability_zone = "${data.aws_availability_zones.available.names[1]}"
 }
+
+resource "aws_vpc_dhcp_options" "dotcom" {
+  domain_name_servers = ["AmazonProvidedDNS"]
+}
