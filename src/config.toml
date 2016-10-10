@@ -1,0 +1,9 @@
+author = "Andrew Langhorn"
+baseurl = "http://ajlanghorn.com/"
+copyright = "Andrew Langhorn. All rights reserved."
+languageCode = "en-gb"
+theme = "hugo-zen"
+title = "Andrew Langhorn"
+
+[params]
+  logo = "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAkaAAAAJGQ1NzBhNTkwLTA1MjMtNDhhYi05MTk3LTI4YTRhNDRlMzk3NA.jpg"
