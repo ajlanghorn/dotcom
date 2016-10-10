@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Andrew Langhorn</title>
-    <link>http://ajlanghorn.com/index.xml</link>
-    <description>Recent content on Andrew Langhorn</description>
+    <title>Post-rsses on Andrew Langhorn</title>
+    <link>http://ajlanghorn.com/post/index.xml</link>
+    <description>Recent content in Post-rsses on Andrew Langhorn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <copyright>Andrew Langhorn. All rights reserved.</copyright>
     <lastBuildDate>Mon, 10 Oct 2016 00:41:07 +0100</lastBuildDate>
-    <atom:link href="http://ajlanghorn.com/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://ajlanghorn.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Driving from Whistler to Montreal</title>
@@ -57,25 +57,6 @@ scraped across three panels when I was trying to navigate a small Montreal
 car park in a big nine-seater Toyota Higlander&amp;hellip;&lt;/p&gt;
 
 &lt;p&gt;Thanks, Canada. You were great fun! Maybe see you again soon.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>http://ajlanghorn.com/about/</link>
-      <pubDate>Sun, 09 Oct 2016 17:39:32 +0100</pubDate>
-      
-      <guid>http://ajlanghorn.com/about/</guid>
-      <description>&lt;p&gt;Andrew is a senior consultant at &lt;a href=&#34;https://thoughtworks.com&#34;&gt;ThoughtWorks&lt;/a&gt;, a
-software design and delivery consultancy, where he works on building,
-architecting and securing infrastructure for clients across a variety of
-sectors.&lt;/p&gt;
-
-&lt;p&gt;Previously, he worked as an infrastructure engineer at the &lt;a href=&#34;https://gds.blog.gov.uk&#34;&gt;Government
-Digital Service&lt;/a&gt; on the award-winning
-&lt;a href=&#34;https://gov.uk&#34;&gt;GOV.UK&lt;/a&gt; project. Outside of work, he enjoys beer, gin,
-gigs, cooking, reading, photography, travel and the occasional foray in to
-illeism.&lt;/p&gt;
 </description>
     </item>
     

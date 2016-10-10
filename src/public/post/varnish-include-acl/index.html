@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.17" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="Andrew Langhorn">
+<title>Easily managing ACLs in Varnish - Andrew Langhorn</title>
+</head>
+<body>
+
+<div class="container">
+
+	<header role="banner">
+		<div class="header-logo">
+			<a href="/"><img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAkaAAAAJGQ1NzBhNTkwLTA1MjMtNDhhYi05MTk3LTI4YTRhNDRlMzk3NA.jpg" width="60" height="60" alt="Andrew Langhorn"></a>
+		</div>
+    <h1 class="site-title">Andrew Langhorn</h1>
+    <a href="/about"dd>About</a>
+	</header>
+
+
+	<main role="main">
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+      <h1 class="entry-title" itemprop="headline">Easily managing ACLs in Varnish</h1>
+      <br />
+			<section itemprop="entry-text">
+				
+
+<p><a href="https://varnish-cache.org">Varnish</a> is a popular caching HTTP reverse
+proxy, used by organisations large and smaller to reduce load on their
+canonical origins, to speed up page response times, and to tamper with HTTP
+requests and responses which pass through it. It&rsquo;s easily one of my
+favourite tools to use when building infrastructure, given how extensible it
+is, and for how many use cases it can be an answer.</p>
+
+<p>I want to focus on a little trick I try regularly to tidy up my VCL (the
+Varnish Configuration Language). Let&rsquo;s say we have a specific snippet that I
+want to use across multiple VCL files, but I don&rsquo;t want to have to update
+the snippet everywhere every time a change is made. A good example might be
+an access control list, or <code>ACL</code>.</p>
+
+<h2 id="creating-the-acl">Creating the ACL</h2>
+
+<p>Firstly, we need to define the ACL. We can do this in a new file - you might
+wish to separate your files to include, like this one, in to a separate
+directory - with this content:</p>
+
+<pre><code>acl restrict_purge {
+  &quot;1.2.3.4&quot;;
+  &quot;10.20.30.40&quot;/27;
+}
+</code></pre>
+
+<p>The <code>restrict_purge</code> section is simply a descriptive name: call it whatever
+you wish, although I find it easier to name snippets as I would functions
+when programming, in that their purpose is clear and they aren&rsquo;t too finely
+scoped. Make sure, howver, that you keep <code>acl</code> at the start, since that&rsquo;s
+what Varnish is using here to work out that this section is an ACL. You&rsquo;ll
+end up in a sticky place if that&rsquo;s not there.</p>
+
+<h2 id="using-the-acl">Using the ACL</h2>
+
+<p>Now that we&rsquo;ve got our ACL defined, we can start to use it. Head in to your
+main VCL (where you&rsquo;ve got your Varnish functions defined), and add the
+following lines to <code>vcl_recv</code>:</p>
+
+<pre><code>if (req.request == &quot;PURGE&quot; &amp;&amp; !(client.ip ~ purge_whitelist)) {
+  error 403 &quot;Forbidden&quot;;
+}
+</code></pre>
+
+<p>Here, we&rsquo;re saying that if the HTTP request is sent with the PURGE method,
+and the source IP isn&rsquo;t contained in the <code>purge_whitelist</code> ACL we defined
+earlier, Varnish should route the request to <code>vcl_error</code> and return a 403
+without processing the request further at all.</p>
+
+<h2 id="using-include">Using <code>include</code></h2>
+
+<p>At this stage, the logic in our main VCL to check the client IP against the
+ACL we created earlier doesn&rsquo;t yet do exactly what we&rsquo;re after since we&rsquo;ve
+not included the ACL. That&rsquo;s a one-liner:</p>
+
+<pre><code>include restrict_purge.vcl
+</code></pre>
+
+<p>And there you have it: a reusable snippet of VCL with an ACL inside that you
+can use across VCL files. That should keep your VCL a little cleaner when
+you have shared dependencies of data.</p>
+
+			</section>
+		</article>
+	</main>
+
+
+	<footer role="contentinfo">
+		<div class="hr"></div>
+		<div class="footer-link">
+			
+			
+			
+			
+		</div>
+		<div class="copyright">Copyright &copy; Andrew Langhorn. All rights reserved.</div>
+	</footer>
+
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Andrew Langhorn</title>
+    <link>http://ajlanghorn.com/tags/index.xml</link>
+    <description>Recent content on Andrew Langhorn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>Andrew Langhorn. All rights reserved.</copyright>
+    <atom:link href="http://ajlanghorn.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Easily managing ACLs in Varnish</title>
+      <link>http://ajlanghorn.com/post/varnish-include-acl/</link>
+      <pubDate>Sat, 09 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://ajlanghorn.com/post/varnish-include-acl/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://varnish-cache.org&#34;&gt;Varnish&lt;/a&gt; is a popular caching HTTP reverse
+proxy, used by organisations large and smaller to reduce load on their
+canonical origins, to speed up page response times, and to tamper with HTTP
+requests and responses which pass through it. It&amp;rsquo;s easily one of my
+favourite tools to use when building infrastructure, given how extensible it
+is, and for how many use cases it can be an answer.&lt;/p&gt;
+
+&lt;p&gt;I want to focus on a little trick I try regularly to tidy up my VCL (the
+Varnish Configuration Language). Let&amp;rsquo;s say we have a specific snippet that I
+want to use across multiple VCL files, but I don&amp;rsquo;t want to have to update
+the snippet everywhere every time a change is made. A good example might be
+an access control list, or &lt;code&gt;ACL&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-the-acl&#34;&gt;Creating the ACL&lt;/h2&gt;
+
+&lt;p&gt;Firstly, we need to define the ACL. We can do this in a new file - you might
+wish to separate your files to include, like this one, in to a separate
+directory - with this content:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;acl restrict_purge {
+  &amp;quot;1.2.3.4&amp;quot;;
+  &amp;quot;10.20.30.40&amp;quot;/27;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;restrict_purge&lt;/code&gt; section is simply a descriptive name: call it whatever
+you wish, although I find it easier to name snippets as I would functions
+when programming, in that their purpose is clear and they aren&amp;rsquo;t too finely
+scoped. Make sure, howver, that you keep &lt;code&gt;acl&lt;/code&gt; at the start, since that&amp;rsquo;s
+what Varnish is using here to work out that this section is an ACL. You&amp;rsquo;ll
+end up in a sticky place if that&amp;rsquo;s not there.&lt;/p&gt;
+
+&lt;h2 id=&#34;using-the-acl&#34;&gt;Using the ACL&lt;/h2&gt;
+
+&lt;p&gt;Now that we&amp;rsquo;ve got our ACL defined, we can start to use it. Head in to your
+main VCL (where you&amp;rsquo;ve got your Varnish functions defined), and add the
+following lines to &lt;code&gt;vcl_recv&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if (req.request == &amp;quot;PURGE&amp;quot; &amp;amp;&amp;amp; !(client.ip ~ purge_whitelist)) {
+  error 403 &amp;quot;Forbidden&amp;quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here, we&amp;rsquo;re saying that if the HTTP request is sent with the PURGE method,
+and the source IP isn&amp;rsquo;t contained in the &lt;code&gt;purge_whitelist&lt;/code&gt; ACL we defined
+earlier, Varnish should route the request to &lt;code&gt;vcl_error&lt;/code&gt; and return a 403
+without processing the request further at all.&lt;/p&gt;
+
+&lt;h2 id=&#34;using-include&#34;&gt;Using &lt;code&gt;include&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;At this stage, the logic in our main VCL to check the client IP against the
+ACL we created earlier doesn&amp;rsquo;t yet do exactly what we&amp;rsquo;re after since we&amp;rsquo;ve
+not included the ACL. That&amp;rsquo;s a one-liner:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;include restrict_purge.vcl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And there you have it: a reusable snippet of VCL with an ACL inside that you
+can use across VCL files. That should keep your VCL a little cleaner when
+you have shared dependencies of data.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Easily managing ACLs in Varnish</title>
+      <link>http://ajlanghorn.com/post/varnish-include-acl/</link>
+      <pubDate>Sat, 09 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://ajlanghorn.com/post/varnish-include-acl/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://varnish-cache.org&#34;&gt;Varnish&lt;/a&gt; is a popular caching HTTP reverse
+proxy, used by organisations large and smaller to reduce load on their
+canonical origins, to speed up page response times, and to tamper with HTTP
+requests and responses which pass through it. It&amp;rsquo;s easily one of my
+favourite tools to use when building infrastructure, given how extensible it
+is, and for how many use cases it can be an answer.&lt;/p&gt;
+
+&lt;p&gt;I want to focus on a little trick I try regularly to tidy up my VCL (the
+Varnish Configuration Language). Let&amp;rsquo;s say we have a specific snippet that I
+want to use across multiple VCL files, but I don&amp;rsquo;t want to have to update
+the snippet everywhere every time a change is made. A good example might be
+an access control list, or &lt;code&gt;ACL&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-the-acl&#34;&gt;Creating the ACL&lt;/h2&gt;
+
+&lt;p&gt;Firstly, we need to define the ACL. We can do this in a new file - you might
+wish to separate your files to include, like this one, in to a separate
+directory - with this content:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;acl restrict_purge {
+  &amp;quot;1.2.3.4&amp;quot;;
+  &amp;quot;10.20.30.40&amp;quot;/27;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;restrict_purge&lt;/code&gt; section is simply a descriptive name: call it whatever
+you wish, although I find it easier to name snippets as I would functions
+when programming, in that their purpose is clear and they aren&amp;rsquo;t too finely
+scoped. Make sure, howver, that you keep &lt;code&gt;acl&lt;/code&gt; at the start, since that&amp;rsquo;s
+what Varnish is using here to work out that this section is an ACL. You&amp;rsquo;ll
+end up in a sticky place if that&amp;rsquo;s not there.&lt;/p&gt;
+
+&lt;h2 id=&#34;using-the-acl&#34;&gt;Using the ACL&lt;/h2&gt;
+
+&lt;p&gt;Now that we&amp;rsquo;ve got our ACL defined, we can start to use it. Head in to your
+main VCL (where you&amp;rsquo;ve got your Varnish functions defined), and add the
+following lines to &lt;code&gt;vcl_recv&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if (req.request == &amp;quot;PURGE&amp;quot; &amp;amp;&amp;amp; !(client.ip ~ purge_whitelist)) {
+  error 403 &amp;quot;Forbidden&amp;quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here, we&amp;rsquo;re saying that if the HTTP request is sent with the PURGE method,
+and the source IP isn&amp;rsquo;t contained in the &lt;code&gt;purge_whitelist&lt;/code&gt; ACL we defined
+earlier, Varnish should route the request to &lt;code&gt;vcl_error&lt;/code&gt; and return a 403
+without processing the request further at all.&lt;/p&gt;
+
+&lt;h2 id=&#34;using-include&#34;&gt;Using &lt;code&gt;include&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;At this stage, the logic in our main VCL to check the client IP against the
+ACL we created earlier doesn&amp;rsquo;t yet do exactly what we&amp;rsquo;re after since we&amp;rsquo;ve
+not included the ACL. That&amp;rsquo;s a one-liner:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;include restrict_purge.vcl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And there you have it: a reusable snippet of VCL with an ACL inside that you
+can use across VCL files. That should keep your VCL a little cleaner when
+you have shared dependencies of data.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -3,6 +3,32 @@
   
   <url>
     <loc>http://ajlanghorn.com/</loc>
+    <lastmod>2016-10-10T00:41:07+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ajlanghorn.com/post/driving-across-canada/</loc>
+    <lastmod>2016-10-10T00:41:07+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ajlanghorn.com/about/</loc>
+    <lastmod>2016-10-09T17:39:32+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ajlanghorn.com/post/moving-to-hugo/</loc>
+    <lastmod>2016-10-09T17:39:32+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ajlanghorn.com/post/onwards-gds/</loc>
+    <lastmod>2015-10-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ajlanghorn.com/post/varnish-include-acl/</loc>
+    <lastmod>2015-05-09T00:00:00+00:00</lastmod>
   </url>
   
 </urlset>
