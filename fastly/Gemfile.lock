@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    colorize (0.5.8)
+    diffy (3.0.1)
+    fastly (1.4.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colorize (= 0.5.8)
+  diffy (= 3.0.1)
+  fastly (~> 1.4)
+
+BUNDLED WITH
+   1.12.4
