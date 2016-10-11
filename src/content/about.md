@@ -14,3 +14,10 @@ Digital Service](https://gds.blog.gov.uk) on the award-winning
 [GOV.UK](https://gov.uk) project. Outside of work, he enjoys beer, gin,
 gigs, cooking, reading, photography, travel and the occasional foray in to
 illeism.
+
+This site is powered by [Hugo](https://gohugo.io), a Golang-powered static
+site generator. The source is committed to the
+[ajlanghorn/dotcom](https://github.com/ajlanghorn/dotcom) repository, and
+pull requests are more than welcome should you feel that way inclined. It's
+canonical origin is an S3 bucket in the `eu-west-1` AWS region, and is
+fronted by the good folks at [Fastly](https://fastly.com).
