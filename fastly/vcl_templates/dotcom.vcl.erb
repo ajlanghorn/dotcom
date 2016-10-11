@@ -1,3 +1,29 @@
+backend F_dotcom {
+  .connect_timeout = 1s;
+  .dynamic = true;
+  .port = "443";
+  .host = "s3-eu-west-1.amazonaws.com";
+  .first_byte_timeout = 15s;
+  .max_connections = 200;
+  .between_bytes_timeout = 10s;
+  .share_key = "<%= config.fetch('service_id') %>";
+
+  .ssl = true;
+  .min_tls_version = "1.2";
+  .ssl_cert_hostname = "s3-eu-west-1.amazonaws.com";
+
+  .probe = {
+    .request =
+      "HEAD / HTTP/1.1"
+      "Connection: close";
+    .window = 5;
+    .threshold = 1;
+    .timeout = 2s;
+    .initial = 5;
+    .dummy = true;
+  }
+}
+
 sub vcl_recv {
 #FASTLY recv
 
