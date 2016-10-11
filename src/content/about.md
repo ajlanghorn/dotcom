@@ -18,6 +18,4 @@ illeism.
 This site is powered by [Hugo](https://gohugo.io), a Golang-powered static
 site generator. The source is committed to the
 [ajlanghorn/dotcom](https://github.com/ajlanghorn/dotcom) repository, and
-pull requests are more than welcome should you feel that way inclined. It's
-canonical origin is an S3 bucket in the `eu-west-1` AWS region, and is
-fronted by the good folks at [Fastly](https://fastly.com).
+pull requests are more than welcome should you feel that way inclined.
