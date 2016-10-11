@@ -97,6 +97,12 @@ sub vcl_deliver {
 # Set HSTS enforcing a maximum age of 1yr in seconds
 set resp.http.Strict-Transport-Security = "max-age=31536000";
 
+# Strip extraneous HTTP headers
+remove resp.http.Server;
+remove resp.http.x-amz-id-2;
+remove resp.http.x-amz-request-id;
+remove resp.http.x-amz-version-id;
+
 #FASTLY deliver
   return(deliver);
 }
