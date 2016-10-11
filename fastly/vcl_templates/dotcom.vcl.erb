@@ -93,6 +93,10 @@ sub vcl_miss {
 }
 
 sub vcl_deliver {
+
+# Set HSTS enforcing a maximum age of 1yr in seconds
+set resp.http.Strict-Transport-Security = "max-age=31536000";
+
 #FASTLY deliver
   return(deliver);
 }
