@@ -25,6 +25,12 @@ backend F_dotcom {
 }
 
 sub vcl_recv {
+
+# Force SSL
+if (!req.http.Fastly-SSL) {
+  error 801 "Force SSL";
+}
+
 #FASTLY recv
 
   if (req.request != "HEAD" && req.request != "GET" && req.request != "FASTLYPURGE") {
@@ -92,6 +98,16 @@ sub vcl_deliver {
 }
 
 sub vcl_error {
+
+# Redirect HTTP requests to HTTPS
+if (obj.status == 801) {
+  set obj.status = 301;
+  set obj.response = "Moved Permanently";
+  set obj.http.Location = "https://" req.http.host req.url;
+  synthetic {""};
+  return(deliver);
+}
+
 #FASTLY error
 }
 
