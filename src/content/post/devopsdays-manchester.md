@@ -5,7 +5,8 @@ slug = "devopsdays-manchester"
 +++
 
 A few weeks ago, whilst travelling, we stopped off overnight in Minneapolis,
-and met Bridget and Joe for dinner in the awesome city they call home. A few
+and met [Bridget](https://twitter.com/bridgetkromhout) and
+[Joe](https://twitter.com/joelaha) for dinner in the awesome city they call home. A few
 margeritas in, and conversation turned to the DevOpsDays conferences which
 Bridget helps organise both in the Twin Cities, and on a global level.
 Somehow, the idea of DevOpsDays Manchester was suggested, and I left
