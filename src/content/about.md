@@ -19,3 +19,5 @@ This site is powered by [Hugo](https://gohugo.io), a Golang-powered static
 site generator. The source is committed to the
 [ajlanghorn/dotcom](https://github.com/ajlanghorn/dotcom) repository, and
 pull requests are more than welcome should you feel that way inclined.
+Builds occurs in [the open](https://travis-ci.org/ajlanghorn/dotcom) using
+[Travis CI](https://travis-ci.org).
