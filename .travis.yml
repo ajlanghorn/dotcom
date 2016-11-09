@@ -7,7 +7,7 @@ script:
   - hugo
   - python --version
   - sudo pip install s3cmd
-  - s3cmd sync --delete-removed -P -M -r public/ s3://ajlanghorn.com/
+  - s3cmd sync --delete-removed -P -M -r src/public/ s3://ajlanghorn.com/
 
 notifications:
   email:
