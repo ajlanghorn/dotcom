@@ -1,7 +1,6 @@
 +++
-date = "now()"
+date = ""
 slug = ""
 tags = ["", ""]
 title = ""
-
 +++
